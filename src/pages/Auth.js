@@ -50,10 +50,7 @@ class AuthPage extends Component {
   submitHandler = (event) => {
     event.preventDefault();
     const {email, password} = this.state;
-    // const email = this.emailEl.current.value;
-    // const password = this.passwordEl.current.value;
-    console.log(email,password)
-
+    
     if (email.trim().length === 0 || password.trim().length === 0) {
       return;
     }
@@ -94,7 +91,7 @@ class AuthPage extends Component {
       };
     }
 
-    console.log(email, password);
+    // console.log(email, password);
     // https://www.baeldung.com/spring-cors
     fetch(graphqlURL, {
       method: "POST",
@@ -110,7 +107,7 @@ class AuthPage extends Component {
         return res.json();
       })
       .then((resData) => {
-        console.log(resData);
+        // console.log(resData);
         if (resData.data.login && resData.data.login.token) {
           this.context.login(
             resData.data.login.token,
@@ -153,7 +150,6 @@ class AuthPage extends Component {
                 name="email"
                 autoComplete="email"
                 autoFocus
-                // value={this.state.email} 
                 onChange={(e) => this.setState({email:e.target.value})}
               />
               <TextField
@@ -165,13 +161,8 @@ class AuthPage extends Component {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                // value={this.state.password} 
                 onChange={(e) => this.setState({password:e.target.value})}
               />
-              {/* <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              /> */}
               <Button
                 type="submit"
                 fullWidth

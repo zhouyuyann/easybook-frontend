@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 
 import AuthContext from "../context/auth-context";
-
-import Modal from "../components/Modal/Modal";
-import Backdrop from "../components/Backdrop/Backdrop";
 import { NavLink } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -20,12 +16,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 function Copyright() {
   return (
@@ -158,93 +151,6 @@ class BookingsPage extends Component {
   render() {
     return (
       <React.Fragment>
-        {(this.state.creating || this.state.selectedEvent) && <Backdrop />}
-        {this.state.creating && (
-          <Modal
-            title="Add Event"
-            canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.modalConfirmHandler}
-            confirmText="Confirm"
-          >
-            <form>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="Title"
-                label="Title"
-                type="Title"
-                id="Title"
-                onChange={(e) => this.setState({titleInput:e.target.value})}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="Description"
-                label="Description"
-                type="Description"
-                id="Description"
-                onChange={(e) => this.setState({descriptionInput:e.target.value})}
-              />
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DateTimePicker
-                  label="Start Date"
-                  margin="normal"
-                  value={this.state.startDateInput}
-                  fullWidth
-                  required
-                  onChange={(e) => this.setState({startDateInput:e})}
-                  renderInput={(params) => <TextField {...params} />}
-                />   
-                <br/>
-                <DateTimePicker
-                  label="End Date"
-                  margin="normal"
-                  value={this.state.endDateInput}
-                  fullWidth
-                  required
-                  onChange={(e) => this.setState({endDateInput:e})}
-                  renderInput={(params) => <TextField {...params} />}
-                /> 
-              </LocalizationProvider>
-
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="People Limit"
-                label="People Limit"
-                type="People Limit"
-                id="People Limit"
-                onChange={(e) => this.setState({pplLimitInput:e.target.value})}
-              />
-              
-            </form>
-          </Modal>
-        )}
-        {this.state.selectedEvent && (
-          <Modal
-            title={this.state.selectedEvent.title}
-            canCancel
-            canConfirm
-            onCancel={this.modalCancelHandler}
-            onConfirm={this.bookEventHandler}
-            confirmText={this.context.token ? "Book" : "Confirm"}
-          >
-            <h1>{this.state.selectedEvent.title}</h1>
-            <p>
-              Start Time : {new Date(this.state.selectedEvent.startDate).toLocaleString()}
-            </p>
-            <p>
-              End Time : {new Date(this.state.selectedEvent.endDate).toLocaleString()}
-            </p>
-            <p>Description : {this.state.selectedEvent.description}</p>
-          </Modal>
-        )}
-
         {<ThemeProvider theme={theme}>
       <CssBaseline />
       <AppBar
@@ -297,7 +203,6 @@ class BookingsPage extends Component {
               spacing={2}
               justifyContent="center"
             >
-              {/* <Button variant="contained">Main call to action</Button> */}
               <NavLink to="/events" style={{ textDecoration: "none" }}>
                 <Button  variant="outlined" onClick={this.startCreateEventHandler}>Start Booking</Button>
               </NavLink>
@@ -310,8 +215,6 @@ class BookingsPage extends Component {
           <Grid container spacing={4}>
             {this.state.bookings.map((booking) => {
               const event = booking.event;
-              console.log(event);
-
               return (
               <Grid item key={booking.id} xs={12} sm={6} md={4}>
                 <Card
@@ -320,9 +223,7 @@ class BookingsPage extends Component {
                   <CardMedia
                     component="img"
                     sx={{
-                      // 16:9
                       pt: '10%',  
-                      // '56.25%'
                     }}
                     image="https://source.unsplash.com/random"
                     alt="random"
@@ -331,9 +232,6 @@ class BookingsPage extends Component {
                     <Typography gutterBottom variant="h5" component="h2">
                       {event.title}
                     </Typography>
-                    {/* <Typography>
-                      Description : {event.description}
-                    </Typography> */}
                     <Typography>
                       Start : {new Date(event.startDate).toLocaleString()}
                     </Typography>
@@ -343,14 +241,9 @@ class BookingsPage extends Component {
                     <Typography>
                       Creator : {event.creator.email}
                     </Typography>
-  
-
                   </CardContent>
                   <CardActions>
                      <Button id={booking.id} size="small" onClick={this.deleteBookingHandler}>Delete</Button> 
-                    
-                   
-                    {/* <Button size="small">Edit</Button> */}
                   </CardActions>
                 </Card>
               </Grid>
@@ -376,18 +269,6 @@ class BookingsPage extends Component {
     </ThemeProvider>}
       </React.Fragment>
     );
-    // return (
-    //   <React.Fragment>
-    //     {this.state.isLoading ? (
-    //       <Spinner />
-    //     ) : (
-    //       <BookingList
-    //         bookings={this.state.bookings}
-    //         onDelete={this.deleteBookingHandler}
-    //       />
-    //     )}
-    //   </React.Fragment>
-    // );
   }
 }
 

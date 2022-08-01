@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import Modal from "../components/Modal/Modal";
-import Backdrop from "../components/Backdrop/Backdrop";
 import AuthContext from "../context/auth-context";
 import { NavLink } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
@@ -245,7 +244,7 @@ class EventsPage extends Component {
         return res.json();
       })
       .then((resData) => {
-        console.log(resData);
+        // console.log(resData);
         this.setState((prevState) => {
           const updatedEvents = prevState.events.filter((event) => {
             return event.id !== eventId;
@@ -296,7 +295,7 @@ class EventsPage extends Component {
         return res.json();
       })
       .then((resData) => {
-        console.log(resData);
+        // console.log(resData);
         this.setState({ selectedEvent: null });
       })
       .catch((err) => {
@@ -311,7 +310,6 @@ class EventsPage extends Component {
   render() {
     return (
       <React.Fragment>
-        {(this.state.creating || this.state.selectedEvent) && <Backdrop />}
         {this.state.creating && (
           <Modal
             title="Create Your Event"
@@ -451,7 +449,6 @@ class EventsPage extends Component {
               spacing={2}
               justifyContent="center"
             >
-              {/* <Button variant="contained">Main call to action</Button> */}
               <Button variant="outlined" onClick={this.startCreateEventHandler}>Create</Button>
             </Stack>
           </Container>
@@ -468,9 +465,7 @@ class EventsPage extends Component {
                   <CardMedia
                     component="img"
                     sx={{
-                      // 16:9
                       pt: '10%',  
-                      // '56.25%'
                     }}
                     image="https://source.unsplash.com/random"
                     alt="random"
@@ -499,8 +494,6 @@ class EventsPage extends Component {
                       <Button id={event.id} size="small" onClick={this.deleteEventHandler}>Delete</Button> : 
                      <Button id={event.id} size="small" onClick={this.showDetailHandler}>View</Button> }
                     
-                   
-                    {/* <Button size="small">Edit</Button> */}
                   </CardActions>
                 </Card>
               </Grid>
