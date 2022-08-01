@@ -483,7 +483,7 @@ class EventsPage extends Component {
                       {event.title}
                     </Typography>
                     <Typography>
-                      Creator : {event.creator.email}
+                      Creator : {this.context.userId===event.creator.id? <p>You are the creator</p> : event.creator.email}
                     </Typography>
                     <Typography>
                       Start : {new Date(event.startDate).toLocaleString()}
