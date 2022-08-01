@@ -216,6 +216,52 @@ class EventsPage extends Component {
     });
   };
 
+  deleteEventHandler = (event) => {
+    this.setState({ isLoading: true });
+    const eventId = event.target.id;
+    const requestBody = {
+      query: `
+          mutation DeleteEvent($id: ID!) {
+              deleteEvent(eventId: $id) {
+                  id
+              }
+          },
+          `,
+      variables: {
+        id: eventId,
+      },
+    };
+
+    // https://www.baeldung.com/spring-cors
+    fetch(graphqlURL, {
+      method: "POST",
+      body: JSON.stringify(requestBody),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.context.token,
+      },
+    })
+      .then((res) => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error("Failed!");
+        }
+        return res.json();
+      })
+      .then((resData) => {
+        console.log(resData);
+        this.setState((prevState) => {
+          const updatedEvents = prevState.events.filter((event) => {
+            return event.id !== eventId;
+          });
+          return { events: updatedEvents, isLoading: false };
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ isLoading: false });
+      });
+  };
+
   bookEventHandler = () => {
     if (!this.context.token) {
       this.setState({ selectedEvent: null });
@@ -452,7 +498,8 @@ class EventsPage extends Component {
 
                   </CardContent>
                   <CardActions>
-                    {this.context.userId===event.creator.id ? <p>You are the creator of this event</p>  : 
+                    {this.context.userId===event.creator.id ?
+                      <Button id={event.id} size="small" onClick={this.deleteEventHandler}>Delete</Button> : 
                      <Button id={event.id} size="small" onClick={this.showDetailHandler}>View</Button> }
                     
                    
