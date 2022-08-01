@@ -78,7 +78,6 @@ class EventsPage extends Component {
     const endDateInput = this.state.endDateInput.getTime();
     const curTime = new Date();
     
-    // console.log( startDateInput <= curTime, )
     if (
       titleInput.trim().length === 0 ||
       startDateInput <= curTime||
@@ -91,7 +90,6 @@ class EventsPage extends Component {
 
     const startDate = this.state.startDateInput;
     const endDate = this.state.endDateInput;
-    // console.log(startDate,endDate,startDateInput,endDateInput,this.state.startDateInput, this.state.endDateInput);
 
 
     const requestBody = {
@@ -117,7 +115,6 @@ class EventsPage extends Component {
     };
 
     const token = this.context.token;
-    console.log(token)
 
     // https://www.baeldung.com/spring-cors
     fetch(graphqlURL, {
@@ -135,7 +132,6 @@ class EventsPage extends Component {
         return res.json();
       })
       .then((resData) => {
-        console.log(resData);
         this.setState((prevState) => {
           const updatedEvents = [...prevState.events];
           updatedEvents.push({
@@ -203,7 +199,7 @@ class EventsPage extends Component {
         }
       })
       .catch((err) => {
-        // console.log(err);
+        console.log(err);
         if (this.isActive) {
           this.setState({ isLoading: false });
         }
@@ -212,7 +208,6 @@ class EventsPage extends Component {
 
   showDetailHandler = (event) => {
     this.setState((prevState) => {
-      // console.log(event.target.id);
       const selectedEvent = prevState.events.find((e) => e.id === event.target.id);
       return { selectedEvent: selectedEvent };
     });

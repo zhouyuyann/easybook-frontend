@@ -16,8 +16,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // const graphqlURL = "http://localhost:8080/graphql";
 const graphqlURL = "https://easybook-springboot.herokuapp.com/graphql";
 
-// "http://easybook-springboot.herokuapp.com:8080/graphql"
-
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
