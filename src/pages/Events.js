@@ -482,9 +482,9 @@ class EventsPage extends Component {
                     <Typography gutterBottom variant="h5" component="h2">
                       {event.title}
                     </Typography>
-                    {/* <Typography>
-                      Description : {event.description}
-                    </Typography> */}
+                    <Typography>
+                      Creator : {event.creator.email}
+                    </Typography>
                     <Typography>
                       Start : {new Date(event.startDate).toLocaleString()}
                     </Typography>
