@@ -91,7 +91,9 @@ class EventsPage extends Component {
 
     const startDate = new Date(startDateInput).toISOString();
     const endDate = new Date(endDateInput).toISOString();
-    // console.log(pplLimitInput, typeof(pplLimitInput));
+    console.log(startDate,endDate,startDateInput,endDateInput,this.state.startDateInput, this.state.endDateInput);
+
+
     const requestBody = {
       query: `
         mutation CreateEvent($title: String!, $desc: String!, $startDate: String!, $endDate: String!, $pplLimit: Int! ) {
@@ -483,7 +485,7 @@ class EventsPage extends Component {
                       {event.title}
                     </Typography>
                     <Typography>
-                      Creator : {this.context.userId===event.creator.id? <p>You are the creator</p> : event.creator.email}
+                      Creator : {this.context.userId===event.creator.id? "You are the creator" : event.creator.email}
                     </Typography>
                     <Typography>
                       Start : {new Date(event.startDate).toLocaleString()}
