@@ -89,9 +89,9 @@ class EventsPage extends Component {
       return;
     }
 
-    const startDate = new Date(startDateInput).toISOString();
-    const endDate = new Date(endDateInput).toISOString();
-    console.log(startDate,endDate,startDateInput,endDateInput,this.state.startDateInput, this.state.endDateInput);
+    const startDate = this.state.startDateInput;
+    const endDate = this.state.endDateInput;
+    // console.log(startDate,endDate,startDateInput,endDateInput,this.state.startDateInput, this.state.endDateInput);
 
 
     const requestBody = {
