@@ -95,7 +95,8 @@ class BookingsPage extends Component {
         if (!resData.data){
           return;
         }
-        const bookings = resData.data.bookings;
+        const bookings = resData.data.bookings.filter(booking => new Date(booking.event.startDate)>=new Date());
+
         this.setState({ bookings: bookings, isLoading: false });
       })
       .catch((err) => {
