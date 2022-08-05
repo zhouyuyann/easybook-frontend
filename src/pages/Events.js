@@ -264,7 +264,7 @@ class EventsPage extends Component {
   };
 
   bookEventHandler = () => {
-    if (!this.context.token) {
+    if (!this.context.token || this.context.userId===this.state.selectedEvent.creator.id ) {
       this.setState({ selectedEvent: null });
       return;
     }
