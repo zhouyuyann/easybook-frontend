@@ -388,9 +388,10 @@ class EventsPage extends Component {
             canConfirm
             onCancel={this.modalCancelHandler}
             onConfirm={this.bookEventHandler}
-            confirmText={this.context.token ? "Book" : "Confirm"}
+            confirmText={(this.context.token && this.context.userId!==this.state.selectedEvent.creator.id) ?  "Book" : "Confirm"}
           >
             {/* <h1>{this.state.selectedEvent.title}</h1> */}
+            {console.log(this.context.userId!==this.state.selectedEvent.creator.id,this.context.userId, this.state.selectedEvent.creator.id)}
             <p>
               Start Time : {new Date(this.state.selectedEvent.startDate).toLocaleString()}
             </p>
@@ -399,7 +400,7 @@ class EventsPage extends Component {
             </p>
             <p>Description : {this.state.selectedEvent.description}</p>
 
-            {this.context.userId===this.state.selectedEvent.creator.id ? <p> Booker : {this.state.selectedEvent.booker.map(booker => <p>{booker.email}</p> )}</p> : null }
+            {this.context.userId===this.state.selectedEvent.creator.id ? <div> Booker : {this.state.selectedEvent.booker.map(booker => <p key={booker.email}>{booker.email}</p> )}</div> : null }
 
           </Modal>
         )}
