@@ -172,6 +172,10 @@ class EventsPage extends Component {
                   id
                   email
                 }
+                booker {
+                  id
+                  email
+                }
             }
         }
         `,
@@ -192,6 +196,7 @@ class EventsPage extends Component {
         return res.json();
       })
       .then((resData) => {
+        console.log(resData)
         const events = resData.data.events;
         if (this.isActive) {
           this.setState({ events: events, isLoading: false });
@@ -385,7 +390,7 @@ class EventsPage extends Component {
             onConfirm={this.bookEventHandler}
             confirmText={this.context.token ? "Book" : "Confirm"}
           >
-            <h1>{this.state.selectedEvent.title}</h1>
+            {/* <h1>{this.state.selectedEvent.title}</h1> */}
             <p>
               Start Time : {new Date(this.state.selectedEvent.startDate).toLocaleString()}
             </p>
@@ -393,6 +398,9 @@ class EventsPage extends Component {
               End Time : {new Date(this.state.selectedEvent.endDate).toLocaleString()}
             </p>
             <p>Description : {this.state.selectedEvent.description}</p>
+
+            {this.context.userId===this.state.selectedEvent.creator.id ? <p> Booker : {this.state.selectedEvent.booker.map(booker => <p>{booker.email}</p> )}</p> : null }
+
           </Modal>
         )}
         {<ThemeProvider theme={theme}>
@@ -491,8 +499,9 @@ class EventsPage extends Component {
                   </CardContent>
                   <CardActions>
                     {this.context.userId===event.creator.id ?
-                      <Button id={event.id} size="small" onClick={this.deleteEventHandler}>Delete</Button> : 
-                     <Button id={event.id} size="small" onClick={this.showDetailHandler}>View</Button> }
+                      <Button id={event.id} size="small" onClick={this.deleteEventHandler}>Delete</Button> : null
+                      }
+                    {<Button id={event.id} size="small" onClick={this.showDetailHandler}>View</Button>}
                     
                   </CardActions>
                 </Card>
