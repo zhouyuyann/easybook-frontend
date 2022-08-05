@@ -92,6 +92,9 @@ class BookingsPage extends Component {
       })
       .then((resData) => {
         console.log(resData);
+        if (!resData.data){
+          return;
+        }
         const bookings = resData.data.bookings;
         this.setState({ bookings: bookings, isLoading: false });
       })
@@ -215,6 +218,7 @@ class BookingsPage extends Component {
           <Grid container spacing={4}>
             {this.state.bookings.map((booking) => {
               const event = booking.event;
+              console.log(event)
               return (
               <Grid item key={booking.id} xs={12} sm={6} md={4}>
                 <Card

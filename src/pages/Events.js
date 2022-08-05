@@ -197,6 +197,9 @@ class EventsPage extends Component {
       })
       .then((resData) => {
         console.log(resData)
+        if (!resData.data){
+          return;
+        }
         const events = resData.data.events;
         if (this.isActive) {
           this.setState({ events: events, isLoading: false });
@@ -283,7 +286,7 @@ class EventsPage extends Component {
       },
     };
 
-    console.log('here',this.state.selectedEvent.id);
+    // console.log('here',this.state.selectedEvent.id);
     // https://www.baeldung.com/spring-cors
     fetch(graphqlURL, {
       method: "POST",
@@ -391,7 +394,7 @@ class EventsPage extends Component {
             confirmText={(this.context.token && this.context.userId!==this.state.selectedEvent.creator.id) ?  "Book" : "Confirm"}
           >
             {/* <h1>{this.state.selectedEvent.title}</h1> */}
-            {console.log(this.context.userId!==this.state.selectedEvent.creator.id,this.context.userId, this.state.selectedEvent.creator.id)}
+            {/* {console.log(this.context.userId!==this.state.selectedEvent.creator.id,this.context.userId, this.state.selectedEvent.creator.id)} */}
             <p>
               Start Time : {new Date(this.state.selectedEvent.startDate).toLocaleString()}
             </p>
@@ -400,7 +403,7 @@ class EventsPage extends Component {
             </p>
             <p>Description : {this.state.selectedEvent.description}</p>
 
-            {this.context.userId===this.state.selectedEvent.creator.id ? <div> Booker : {this.state.selectedEvent.booker.map(booker => <p key={booker.email}>{booker.email}</p> )}</div> : null }
+            {this.context.userId===this.state.selectedEvent.creator.id ? <div> Booker : { this.state.selectedEvent.booker ? this.state.selectedEvent.booker.map(booker => <p key={booker.email}>{booker.email}</p>) : null}</div> : null }
 
           </Modal>
         )}
@@ -466,6 +469,7 @@ class EventsPage extends Component {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {this.state.events.map((event) => {
+              {/* console.log(event) */}
               return (
               <Grid item key={event.id} xs={12} sm={6} md={4}>
                 <Card
